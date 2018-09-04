@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+div#cartoon{
+	background:#CCC;
+	border:#999 1px solid;
+	width:800px;
+	height:540px;
+	padding:24px;
+	margin:0px auto;
+}
+div#cartoon > div{
+	background: #ccc;
+	border:#000 1px solid;
+	width:71px;
+	height:71px;
+	float:left;
+	margin:10px;
+	padding:20px;
+	
+	cursor:pointer;
+	text-align:center;
+}
+</style>
+<script>
+  
+/*var array = ['img/9ba25796112cad616be27e473ae1e149.jpg',
+'img/9ba25796112cad616be27e473ae1e149.jpg','img/220px-Goofy.svg.png',
+'img/220px-Goofy.svg.png','img/1964883_726923827347640_695294356_n.jpg',
+'img/1964883_726923827347640_695294356_n.jpg','img/4420364-cartoon-characters.png',
+'img/4420364-cartoon-characters.png','img/c98ee48d53c7b9e1ba07b5b4824e55c0.jpg',
+'img/c98ee48d53c7b9e1ba07b5b4824e55c0.jpg','img/ce5f53437e291c48705428721406985c.jpg',
+'img/ce5f53437e291c48705428721406985c.jpg','img/Donald-Duck-Iconic.jpg','img/Donald-Duck-Iconic.jpg',
+'img/doraemon-1.png','img/doraemon-1.png','img/images.jpg','img/images.jpg','img/images.png','img/images.png',
+'img/kids-cartoon-characters-kids-cartoon-characters-adorable-clip-art-pinterest-kids.jpg',
+'img/kids-cartoon-characters-kids-cartoon-characters-adorable-clip-art-pinterest-kids.jpg',
+'img/security-cartoon-character-3091.jpg','img/security-cartoon-character-3091.jpg'];*/
+
+var array=['a','b','c','a','b','c'];
+var values = [];
+var ids = [];
+var flipped = 0;
+var counter=0;
+Array.prototype.memory_tile_shuffle = function(){
+    var i = array.length, j, temp;
+    while(--i > 0){
+        j = Math.floor(Math.random() * (i+1));
+        temp = array[j];
+        array[j] = array[i];
+        array[i] = temp;
+    }
+}
+function new1(){
+	flipped = 0;
+	var output = '';
+  array.memory_tile_shuffle();
+	for(var i = 0; i < array.length; i++){
+		output += '<div id="tile_'+i+'" onclick="memoryFlipTile(this,\''+array[i]+'\')"></div>'
+	}
+	document.getElementById('cartoon').innerHTML = output;
+}
+function memoryFlipTile(tile,val){
+	if(tile.innerHTML == "" && values.length < 2){
+		tile.style.background = 'pink';
+  
+    tile.innerHTML=val;
+		if(values.length == 0){
+			values.push(val);
+			ids.push(tile.id);
+		} else if(values.length == 1){
+			values.push(val);
+			ids.push(tile.id);
+			if(values[0] == values[1]){
+        counter++;
+        document.getElementById('cnt').innerHTML = counter;
+
+				flipped += 2;
+				
+				values = [];
+            	ids = [];
+				
+				if(flipped > array.length){
+					
+					document.getElementById('cartoon').innerHTML = "";
+					new1();
+				}
+			} else {
+				function flip2Back(){
+            counter++;
+            document.getElementById('cnt').innerHTML = counter;
+
+				    var tile_1 = document.getElementById(ids[0]);
+				    var tile_2 = document.getElementById(ids[1]);
+				    tile_1.style.background = '#ccc';
+            	    tile_1.innerHTML = "";
+				    tile_2.style.background = '#ccc ';
+            	    tile_2.innerHTML = "";
+				    
+				    values = [];
+            	    ids = [];
+				}
+				setTimeout(flip2Back, 200);
+			}
+		}
+	}
+}
+
+</script>
+</head>
+<body>
+<div id="cartoon"></div>
+<script>new1();</script>
+<div class="points">
+  <div class="ctr">
+    Moves: <span id="cnt">0</span>
+  </div>
+</div>
+
+<div id="basicUsage">00:00:00</div>
+<script>
+    var timer = new Timer();
+    timer.start();
+    timer.addEventListener('secondsUpdated', function (e) {
+        $('#basicUsage').html(timer.getTimeValues().toString());
+    });</script>
+
+</body>
+</html>
