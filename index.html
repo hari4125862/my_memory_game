@@ -2,45 +2,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-div#cartoon{
-	background:#CCC;
-	border:#999 1px solid;
-	width:800px;
-	height:540px;
-	padding:24px;
-	margin:0px auto;
-}
-div#cartoon > div{
-	background: #ccc;
-	border:#000 1px solid;
-	width:71px;
-	height:71px;
-	float:left;
-	margin:10px;
-	padding:20px;
-	
-	cursor:pointer;
-	text-align:center;
-}
-</style>
+<link rel="stylesheet" type="text/css" href="main.css">
 <script>
   
-/*var array = ['img/9ba25796112cad616be27e473ae1e149.jpg',
-'img/9ba25796112cad616be27e473ae1e149.jpg','img/220px-Goofy.svg.png',
-'img/220px-Goofy.svg.png','img/1964883_726923827347640_695294356_n.jpg',
-'img/1964883_726923827347640_695294356_n.jpg','img/4420364-cartoon-characters.png',
-'img/4420364-cartoon-characters.png','img/c98ee48d53c7b9e1ba07b5b4824e55c0.jpg',
-'img/c98ee48d53c7b9e1ba07b5b4824e55c0.jpg','img/ce5f53437e291c48705428721406985c.jpg',
-'img/ce5f53437e291c48705428721406985c.jpg','img/Donald-Duck-Iconic.jpg','img/Donald-Duck-Iconic.jpg',
-'img/doraemon-1.png','img/doraemon-1.png','img/images.jpg','img/images.jpg','img/images.png','img/images.png',
-'img/kids-cartoon-characters-kids-cartoon-characters-adorable-clip-art-pinterest-kids.jpg',
-'img/kids-cartoon-characters-kids-cartoon-characters-adorable-clip-art-pinterest-kids.jpg',
-'img/security-cartoon-character-3091.jpg','img/security-cartoon-character-3091.jpg'];*/
+var array = [         
+	{  thumbnail:'img/9ba25796112cad616be27e473ae1e149.jpg'},
+	{  thumbnail:'img/9ba25796112cad616be27e473ae1e149.jpg'},
+	{  thumbnail:'img/220px-Goofy.svg.png'},
+	{  thumbnail:'img/220px-Goofy.svg.png'},
+	{  thumbnail:'img/4420364-cartoon-characters.png'},
 
-var array=['a','b','c','a','b','c'];
+	{  thumbnail:'img/4420364-cartoon-characters.png'},
+
+	{  thumbnail:'img/images.jpg'},
+	{  thumbnail:'img/images.jpg'},
+	{  thumbnail:'img/images.png'},
+
+	{  thumbnail:'img/images.png'},
+
+
+	{  thumbnail:'img/ce5f53437e291c48705428721406985c.jpg'},
+
+	{  thumbnail:'img/ce5f53437e291c48705428721406985c.jpg'}
+	];
+
+
+
+	
+
+/*var array=['a','b','c','a','b','c'];*/
 var values = [];
 var ids = [];
+var set=[];
 var flipped = 0;
 var counter=0;
 Array.prototype.memory_tile_shuffle = function(){
@@ -52,51 +45,85 @@ Array.prototype.memory_tile_shuffle = function(){
         array[i] = temp;
     }
 }
+
+
 function new1(){
+
+	
 	flipped = 0;
 	var output = '';
   array.memory_tile_shuffle();
 	for(var i = 0; i < array.length; i++){
-		output += '<div id="tile_'+i+'" onclick="memoryFlipTile(this,\''+array[i]+'\')"></div>'
-	}
+		output += '<img src="img/Donald-Duck-Iconic.jpg" id="tile_'+i+'" onclick="memoryFlipTile(tile_'+i+',\''+array[i].thumbnail+'\',this)" >';	}
 	document.getElementById('cartoon').innerHTML = output;
+
 }
-function memoryFlipTile(tile,val){
-	if(tile.innerHTML == "" && values.length < 2){
-		tile.style.background = 'pink';
+
+
+function memoryFlipTile(tile,val,at){
+	if(val=="img/Donald-Duck-Iconic.jpg"  && values.length < 2){
+		tile.style.background = 'white';
+
+
+/*
+set.push(val);
+var len = set.length;
+if(len === 2){
+	counter++;
+        document.getElementById('cnt').innerHTML = counter;
+}
+if(set[0].type === set[1].type){
+
+
+		 openedCards.push(this);
+    var len = openedCards.length;
+    if(len === 2){
+        moveCounter();
+        if(openedCards[0].type === openedCards[1].type){
+            matched();
+        } else {
+            unmatched();
+        }
+    }
+
+
+*/
   
-    tile.innerHTML=val;
+    at.src=val;
 		if(values.length == 0){
 			values.push(val);
 			ids.push(tile.id);
+			set.push("0");
 		} else if(values.length == 1){
 			values.push(val);
 			ids.push(tile.id);
+			set.push("0");
 			if(values[0] == values[1]){
-        counter++;
-        document.getElementById('cnt').innerHTML = counter;
-
+				coun();
+				
 				flipped += 2;
 				
 				values = [];
             	ids = [];
 				
-				if(flipped > array.length){
-					
+				if(flipped == array.length){
+
+					alert("won");
 					document.getElementById('cartoon').innerHTML = "";
+					document.getElementById('cnt').innerHTML = '0';
+
 					new1();
 				}
 			} else {
 				function flip2Back(){
-            counter++;
-            document.getElementById('cnt').innerHTML = counter;
+            coun();
 
 				    var tile_1 = document.getElementById(ids[0]);
 				    var tile_2 = document.getElementById(ids[1]);
-				    tile_1.style.background = '#ccc';
-            	    tile_1.innerHTML = "";
-				    tile_2.style.background = '#ccc ';
-            	    tile_2.innerHTML = "";
+				    tile_1.style.background = 'white';
+            	    tile_1.src = "img/Donald-Duck-Iconic.jpg";
+				    tile_2.style.background = 'white ';
+            	    tile_2.src = "img/Donald-Duck-Iconic.jpg";
 				    
 				    values = [];
             	    ids = [];
@@ -107,24 +134,51 @@ function memoryFlipTile(tile,val){
 	}
 }
 
+function coun(){
+	counter++;
+        document.getElementById('cnt').innerHTML = counter;
+
+
+   if(counter == 1){
+        second = 0;
+        minute = 0; 
+        hour = 0;
+        startTimer();
+    }		
+var second = 0, minute = 0; hour = 0;
+var interval;
+function startTimer(){
+    interval = setInterval(function(){
+        document.getElementById("timer") .innerHTML= minute+"mins "+second+"secs";
+        second++;
+        if(second == 60){
+            minute++;
+            second=0;
+        }
+        if(minute == 60){
+            hour++;
+            minute = 0;
+        }
+    },1000);
+}
+}
+
 </script>
 </head>
-<body>
+<body style="background-color: aquamarine">
+
+	<h1> Memory Game</h1>
 <div id="cartoon"></div>
 <script>new1();</script>
 <div class="points">
   <div class="ctr">
-    Moves: <span id="cnt">0</span>
+   <h1>Moves: <span id="cnt">0</span></h1>
   </div>
+  <div class="ti"><h1>Time:  <span id="timer">00mins  00secs</span></h1></div>
+
 </div>
 
-<div id="basicUsage">00:00:00</div>
-<script>
-    var timer = new Timer();
-    timer.start();
-    timer.addEventListener('secondsUpdated', function (e) {
-        $('#basicUsage').html(timer.getTimeValues().toString());
-    });</script>
+
 
 </body>
 </html>
