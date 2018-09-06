@@ -1,4 +1,44 @@
-.frames{
+.body{
+    background-color: black;
+}
+
+h1{
+    text-align: center;
+    font-family: 'Merienda';
+}
+
+.points{
     display: flex;
-    background-color: blue;
+    width:100%;
+    justify-content: center;
+}
+
+.ctr{
+
+width: 20%;
+}
+
+.ti{
+width: 30%;
+
+}
+div#cartoon{
+background:#CCC;
+border:#999 1px solid;
+width:650px;
+height:500px;
+padding:24px ;
+margin:20px auto;
+}
+div#cartoon > img{
+background:white;
+border:#000 1px solid;
+width:100px;
+height:100px;
+float:left;
+margin:10px;
+padding:20px;
+border-radius: 50%;
+cursor:pointer;
+text-align:center;
 }
